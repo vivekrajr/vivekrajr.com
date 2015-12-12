@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/julienschmidt/httprouter"
 	"github.com/vivekrajr/vivekrajr.com/controllers"
+	"net/http"
 )
 
 type Routes struct {
@@ -29,4 +30,5 @@ func IndexRoutes(r *Routes) {
 	r.Route.GET("/", ic.Index)
 	r.Route.GET("/home/", ic.Index)
 	r.Route.GET("/home/index", ic.Index)
+	r.Route.ServeFiles("/static/*filepath", http.Dir("templates/static"))
 }

@@ -1,9 +1,12 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/julienschmidt/httprouter"
+	"html/template"
 	"net/http"
+	"path"
+	"strconv"
+	"time"
 )
 
 type HomeController struct{}
@@ -13,5 +16,22 @@ func NewHomeController() *HomeController {
 }
 
 func (ic HomeController) Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	fmt.Fprintf(w, "Hello Universe!\n")
+	fp := path.Join("templates", "index.html")
+
+	tmpl, err := template.ParseFiles(fp)
+
+	data := struct {
+		Year string
+	}{
+		Year: strconv.Itoa(time.Now().Year()),
+	}
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := tmpl.Execute(w, data); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
