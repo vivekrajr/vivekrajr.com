@@ -8,5 +8,5 @@ import (
 func main() {
 	r := routes.AllRoutes()
 
-	http.ListenAndServe(":8000", r)
+	http.ListenAndServe("127.0.0.1:8000", r)
 }
