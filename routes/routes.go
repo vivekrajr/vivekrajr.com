@@ -27,4 +27,6 @@ func IndexRoutes(r *Routes) {
 	ic := controllers.NewHomeController()
 
 	r.Route.GET("/", ic.Index)
+	r.Route.GET("/home/", ic.Index)
+	r.Route.GET("/home/index", ic.Index)
 }
